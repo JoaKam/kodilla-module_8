@@ -8,7 +8,7 @@ class SearchFlight {
     public SearchFlight() {
     }
 
-    public Map<String, Boolean> createAirportsMap() {
+    public static Map<String, Boolean> createAirportsMap() {
 
         Map<String, Boolean> airportsMap = new HashMap<>();
 
@@ -25,22 +25,20 @@ class SearchFlight {
 
     }
 
-    public void findFlight(Flight flight) throws RouteNotFoundException {
+    public void findFlight(Flight flight, Map<String, Boolean> airports) throws RouteNotFoundException {
 
-        Map<String, Boolean> airports = createAirportsMap();
+
         String destinationAirport = flight.getArrivalAirport();
-
         Boolean isFlightFound = airports.get(destinationAirport);
 
         if (isFlightFound != null) {
             if (isFlightFound) {
                 System.out.println(flight + " found.");
-            }else{
+            } else {
                 System.out.println(flight + " not found.");
             }
+        } else {
+            throw new RouteNotFoundException("Destination airport is not present in flight list.");
         }
-
-        throw new RouteNotFoundException("Destination airport is not accessible.");
-
     }
 }
